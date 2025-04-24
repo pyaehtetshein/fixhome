@@ -6,7 +6,7 @@ import {
   BUCKET_ID,
   DATABASE_ID,
   ENDPOINT,
-  PATIENT_COLLECTION_ID,
+  CLIENT_COLLECTION_ID,
   PROJECT_ID,
   databases,
   storage,
@@ -76,7 +76,7 @@ export const registerPatient = async ({
     // Create new patient document -> https://appwrite.io/docs/references/cloud/server-nodejs/databases#createDocument
     const newPatient = await databases.createDocument(
       DATABASE_ID!,
-      PATIENT_COLLECTION_ID!,
+      CLIENT_COLLECTION_ID!,
       ID.unique(),
       {
         identificationDocumentId: file?.$id ? file.$id : null,
@@ -98,7 +98,7 @@ export const getPatient = async (userId: string) => {
   try {
     const patients = await databases.listDocuments(
       DATABASE_ID!,
-      PATIENT_COLLECTION_ID!,
+      CLIENT_COLLECTION_ID!,
       [Query.equal("userId", [userId])]
     );
 

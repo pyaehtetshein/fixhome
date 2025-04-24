@@ -9,6 +9,7 @@ import { Appointment } from "@/types/appwrite.types";
 
 import { AppointmentModal } from "../AppointmentModal";
 import { StatusBadge } from "../StatusBadge";
+import { ClientDetailModal } from "../ClientDetailModal";
 
 export const columns: ColumnDef<Appointment>[] = [
   {
@@ -19,10 +20,18 @@ export const columns: ColumnDef<Appointment>[] = [
   },
   {
     accessorKey: "patient",
-    header: "Patient",
+    header: "Client",
     cell: ({ row }) => {
       const appointment = row.original;
       return <p className="text-14-medium ">{appointment.patient.name}</p>;
+    },
+  },
+  {
+    accessorKey: "patient",
+    header: "Contact Number",
+    cell: ({ row }) => {
+      const appointment = row.original;
+      return <p className="text-14-medium ">{appointment.patient.phone}</p>;
     },
   },
   {
@@ -50,13 +59,13 @@ export const columns: ColumnDef<Appointment>[] = [
     },
   },
   {
-    accessorKey: "primaryPhysician",
-    header: "Doctor",
+    accessorKey: "primaryContractor",
+    header: "Contractor",
     cell: ({ row }) => {
       const appointment = row.original;
 
       const doctor = Doctors.find(
-        (doctor) => doctor.name === appointment.primaryPhysician
+        (doctor) => doctor.name === appointment.primaryContractor
       );
 
       return (
@@ -68,7 +77,7 @@ export const columns: ColumnDef<Appointment>[] = [
             height={100}
             className="size-8"
           />
-          <p className="whitespace-nowrap">Dr. {doctor?.name}</p>
+          <p className="whitespace-nowrap">Mr. {doctor?.name}</p>
         </div>
       );
     },
@@ -96,6 +105,29 @@ export const columns: ColumnDef<Appointment>[] = [
             type="cancel"
             title="Cancel Appointment"
             description="Are you sure you want to cancel your appointment?"
+          />
+          <ClientDetailModal
+            name={appointment.patient.name}
+            birthDate={appointment.patient.birthDate}
+            address={appointment.patient.address}
+            occupation={appointment.patient.occupation}
+            insuranceProvider={appointment.patient.insuranceProvider}
+            identificationType={appointment.patient.identificationType}
+            identificationNumber={appointment.patient.identificationNumber}
+            languagePreferances={appointment.patient.languagePreferances}
+            typeofProperty={appointment.patient.typeofProperty}
+            ageofProperty={appointment.patient.ageofProperty}
+            ownOrRent={appointment.patient.ownOrRent}
+            patientId={appointment.patient.$id}
+            userId={appointment.userId}
+            identificationDocumentId={
+              appointment.patient.identificationDocumentId
+            }
+            identificationDocumentUrl={
+              appointment.patient.identificationDocumentUrl
+            }
+            title="Client Details"
+            description="Detail of the client"
           />
         </div>
       );
