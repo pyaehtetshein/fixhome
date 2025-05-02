@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Doctors } from "@/constants";
-import { getAppointment } from "@/lib/actions/appointment.actions";
+import { getRepairAppointment } from "@/lib/actions/repairappointment.actions";
 import { formatDateTime } from "@/lib/utils";
 
 const RequestSuccess = async ({
@@ -11,14 +11,14 @@ const RequestSuccess = async ({
   params: { userId },
 }: SearchParamProps) => {
   const appointmentId = (searchParams?.appointmentId as string) || "";
-  const appointment = await getAppointment(appointmentId);
+  const appointment = await getRepairAppointment(appointmentId);
 
   const doctor = Doctors.find(
     (doctor) => doctor.name === appointment.primaryContractor
   );
 
   return (
-    <div className="flex h-screen max-h-screen px-[5%]">
+    <div className="flex h-screen max-h-screen px-[2%]">
       <div className="success-img w-full">
         {/* Logo and View My Profile Button side by side */}
         <div className="flex justify-between items-center mb-8">

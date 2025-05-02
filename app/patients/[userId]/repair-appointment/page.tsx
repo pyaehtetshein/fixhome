@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { AppointmentForm } from "@/components/forms/AppointmentForm";
+import { RepairAppointmentForm } from "@/components/forms/RepairAppointmentForm";
 import { getPatient } from "@/lib/actions/patient.actions";
 
 // This component displays the appointment form and the option to view the user's profile
-const Appointment = async ({ params: { userId } }: SearchParamProps) => {
+const RepairAppointment = async ({ params: { userId } }: SearchParamProps) => {
   // Fetch the patient's details using the userId
   const patient = await getPatient(userId);
 
@@ -46,7 +46,7 @@ const Appointment = async ({ params: { userId } }: SearchParamProps) => {
           </div>
 
           {/* Appointment Form */}
-          <AppointmentForm
+          <RepairAppointmentForm
             patientId={patient?.$id}
             userId={userId}
             type="create"
@@ -69,4 +69,4 @@ const Appointment = async ({ params: { userId } }: SearchParamProps) => {
   );
 };
 
-export default Appointment;
+export default RepairAppointment;

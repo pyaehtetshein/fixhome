@@ -42,45 +42,38 @@ export const IdentificationTypes = [
 
 export const Doctors = [
   {
-    image: "/assets/images/dr-green.png",
-    name: "John Green",
+    image: "/assets/images/contractor.jpg",
+    name: "KONCISE COMPANY LIMITED",
   },
   {
-    image: "/assets/images/dr-cameron.png",
-    name: "Leila Cameron",
+    image: "/assets/images/contractor.jpg",
+    name: "THE ENTERPRISE RESOURCES TRAINING COMPANY LIMITED",
   },
   {
-    image: "/assets/images/dr-livingston.png",
-    name: "David Livingston",
+    image: "/assets/images/contractor.jpg",
+    name: "PRIME SOLUTION AND SERVICES COMPANY LIMITED",
   },
   {
-    image: "/assets/images/dr-peter.png",
-    name: "Evan Peter",
+    image: "/assets/images/contractor.jpg",
+    name: "NETAFIM (THAILAND) COMPANY LIMITED",
   },
   {
-    image: "/assets/images/dr-powell.png",
-    name: "Jane Powell",
+    image: "/assets/images/contractor.jpg",
+    name: "LANDY HOME (THAILAND) COMPANY LIMITED",
   },
   {
-    image: "/assets/images/dr-remirez.png",
-    name: "Alex Ramirez",
+    image: "/assets/images/contractor.jpg",
+    name: "ADVANCE CIVIL GROUP COMPANY LIMITED",
   },
   {
-    image: "/assets/images/dr-lee.png",
-    name: "Jasmine Lee",
-  },
-  {
-    image: "/assets/images/dr-cruz.png",
-    name: "Alyana Cruz",
-  },
-  {
-    image: "/assets/images/dr-sharma.png",
-    name: "Hardik Sharma",
+    image: "/assets/images/contractor.jpg",
+    name: "GUARDFIRE LIMITED",
   },
 ];
 
 export const StatusIcon = {
   scheduled: "/assets/icons/check.svg",
+  completed: "/assets/icons/check.svg",
   pending: "/assets/icons/pending.svg",
   cancelled: "/assets/icons/cancelled.svg",
 };

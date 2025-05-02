@@ -3,10 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { ID, Query } from "node-appwrite";
 
-import { Appointment } from "@/types/appwrite.types";
+import { RepairAppointment } from "@/types/appwrite.types";
 
 import {
-  APPOINTMENT_COLLECTION_ID,
+  REPAIRAPPOINTMENT_COLLECTION_ID,
   DATABASE_ID,
   databases,
   messaging,
@@ -14,13 +14,13 @@ import {
 import { formatDateTime, parseStringify } from "../utils";
 
 //  CREATE APPOINTMENT
-export const createAppointment = async (
-  appointment: CreateAppointmentParams
+export const createRepairAppointment = async (
+  appointment: CreateRepairAppointmentParams
 ) => {
   try {
     const newAppointment = await databases.createDocument(
       DATABASE_ID!,
-      APPOINTMENT_COLLECTION_ID!,
+      REPAIRAPPOINTMENT_COLLECTION_ID!,
       ID.unique(),
       appointment
     );
@@ -33,11 +33,11 @@ export const createAppointment = async (
 };
 
 //  GET RECENT APPOINTMENTS
-export const getRecentAppointmentList = async () => {
+export const getRecentRepairAppointmentList = async () => {
   try {
     const appointments = await databases.listDocuments(
       DATABASE_ID!,
-      APPOINTMENT_COLLECTION_ID!,
+      REPAIRAPPOINTMENT_COLLECTION_ID!,
       [Query.orderDesc("$createdAt")]
     );
 
@@ -68,7 +68,7 @@ export const getRecentAppointmentList = async () => {
       cancelledCount: 0,
     };
 
-    const counts = (appointments.documents as Appointment[]).reduce(
+    const counts = (appointments.documents as RepairAppointment[]).reduce(
       (acc, appointment) => {
         switch (appointment.status) {
           case "completed":
@@ -120,40 +120,39 @@ export const sendSMSNotification = async (userId: string, content: string) => {
 };
 
 //  UPDATE APPOINTMENT
-export const updateAppointment = async ({
+export const updateRepairAppointment = async ({
   appointmentId,
   userId,
-  timeZone,
   appointment,
   type,
-}: UpdateAppointmentParams) => {
+}: UpdateRepairAppointmentParams) => {
   try {
     // Update appointment to scheduled -> https://appwrite.io/docs/references/cloud/server-nodejs/databases#updateDocument
-    const updatedAppointment = await databases.updateDocument(
+    const updatedRepairAppointment = await databases.updateDocument(
       DATABASE_ID!,
-      APPOINTMENT_COLLECTION_ID!,
+      REPAIRAPPOINTMENT_COLLECTION_ID!,
       appointmentId,
       appointment
     );
 
-    if (!updatedAppointment) throw Error;
+    if (!updatedRepairAppointment) throw Error;
 
-    const smsMessage = `Greetings from FixHome. ${type === "schedule" ? `Your appointment is confirmed for ${formatDateTime(appointment.schedule!, timeZone).dateTime} with Mr. ${appointment.primaryContractor}` : `We regret to inform that your appointment for ${formatDateTime(appointment.schedule!, timeZone).dateTime} is cancelled. Reason:  ${appointment.cancellationReason}`}.`;
+    const smsMessage = `Greetings from FixHome. ${type === "schedule" ? `Your appointment is confirmed for ${formatDateTime(appointment.schedule!).dateTime} with Mr. ${appointment.primaryContractor}` : `We regret to inform that your appointment for ${formatDateTime(appointment.schedule!).dateTime} is cancelled. Reason:  ${appointment.cancellationReason}`}.`;
     await sendSMSNotification(userId, smsMessage);
 
     revalidatePath("/admin");
-    return parseStringify(updatedAppointment);
+    return parseStringify(updatedRepairAppointment);
   } catch (error) {
     console.error("An error occurred while scheduling an appointment:", error);
   }
 };
 
 // GET APPOINTMENT
-export const getAppointment = async (appointmentId: string) => {
+export const getRepairAppointment = async (appointmentId: string) => {
   try {
     const appointment = await databases.getDocument(
       DATABASE_ID!,
-      APPOINTMENT_COLLECTION_ID!,
+      REPAIRAPPOINTMENT_COLLECTION_ID!,
       appointmentId
     );
 

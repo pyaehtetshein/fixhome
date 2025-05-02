@@ -10,11 +10,11 @@ import { z } from "zod";
 import { SelectItem } from "@/components/ui/select";
 import { Doctors } from "@/constants";
 import {
-  createAppointment,
-  updateAppointment,
-} from "@/lib/actions/appointment.actions";
-import { getAppointmentSchema } from "@/lib/validation";
-import { Appointment } from "@/types/appwrite.types";
+  createRepairAppointment,
+  updateRepairAppointment,
+} from "@/lib/actions/repairappointment.actions";
+import { getRepairAppointmentSchema } from "@/lib/validation";
+import { RepairAppointment } from "@/types/appwrite.types";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -22,7 +22,7 @@ import CustomFormField, { FormFieldType } from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 import { Form } from "../ui/form";
 
-export const AppointmentForm = ({
+export const RepairAppointmentForm = ({
   userId,
   patientId,
   type = "create",
@@ -32,13 +32,13 @@ export const AppointmentForm = ({
   userId: string;
   patientId: string;
   type: "create" | "schedule" | "cancel" | "completed";
-  appointment?: Appointment;
+  appointment?: RepairAppointment;
   setOpen?: Dispatch<SetStateAction<boolean>>;
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const AppointmentFormValidation = getAppointmentSchema(type);
+  const AppointmentFormValidation = getRepairAppointmentSchema(type);
 
   const form = useForm<z.infer<typeof AppointmentFormValidation>>({
     resolver: zodResolver(AppointmentFormValidation),
@@ -90,12 +90,12 @@ export const AppointmentForm = ({
       console.log("Appointment Data being sent:", appointmentData); // Debug log
 
       if (type === "create" && patientId) {
-        const newAppointment = await createAppointment(appointmentData);
+        const newAppointment = await createRepairAppointment(appointmentData);
 
         if (newAppointment) {
           form.reset();
           router.push(
-            `/patients/${userId}/new-appointment/success?appointmentId=${newAppointment.$id}`
+            `/patients/${userId}/repair-appointment/success?appointmentId=${newAppointment.$id}`
           );
         }
       } else {
@@ -113,7 +113,8 @@ export const AppointmentForm = ({
           type,
         };
 
-        const updatedAppointment = await updateAppointment(appointmentToUpdate);
+        const updatedAppointment =
+          await updateRepairAppointment(appointmentToUpdate);
 
         if (updatedAppointment) {
           setOpen && setOpen(false);

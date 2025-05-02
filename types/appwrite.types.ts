@@ -32,5 +32,20 @@ export interface Appointment extends Models.Document {
   reason: string;
   note: string;
   userId: string;
+  location: string;
   cancellationReason: string | null;
+  boq: string | null;
+}
+
+export interface RepairAppointment extends Models.Document {
+  patient: Patient;
+  schedule: Date;
+  status: Status;
+  primaryContractor: string;
+  reason: string;
+  note: string;
+  userId: string;
+  location: string;
+  cancellationReason: string | null;
+  boq: string | null;
 }

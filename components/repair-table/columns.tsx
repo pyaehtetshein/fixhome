@@ -5,26 +5,17 @@ import Image from "next/image";
 
 import { Doctors } from "@/constants";
 import { formatDateTime } from "@/lib/utils";
-import { Appointment } from "@/types/appwrite.types";
+import { RepairAppointment } from "@/types/appwrite.types";
 
-import { AppointmentModal } from "../AppointmentModal";
+import { RepairAppointmentModal } from "../RepairAppointmentModal";
 import { StatusBadge } from "../StatusBadge";
 import { ClientDetailModal } from "../ClientDetailModal";
 
-export const columns: ColumnDef<Appointment>[] = [
+export const columns: ColumnDef<RepairAppointment>[] = [
   {
     header: "#",
     cell: ({ row }) => {
       return <p className="text-14-medium ">{row.index + 1}</p>;
-    },
-  },
-
-  {
-    accessorKey: "patient",
-    header: "Email",
-    cell: ({ row }) => {
-      const appointment = row.original;
-      return <p className="text-14-medium ">{appointment.patient.email}</p>;
     },
   },
   {
@@ -57,7 +48,7 @@ export const columns: ColumnDef<Appointment>[] = [
   },
   {
     accessorKey: "schedule",
-    header: "Appointment",
+    header: "RepairAppointment",
     cell: ({ row }) => {
       const appointment = row.original;
       return (
@@ -100,7 +91,7 @@ export const columns: ColumnDef<Appointment>[] = [
 
       return (
         <div className="flex gap-1">
-          <AppointmentModal
+          <RepairAppointmentModal
             patientId={appointment.patient.$id}
             userId={appointment.userId}
             appointment={appointment}
@@ -108,7 +99,7 @@ export const columns: ColumnDef<Appointment>[] = [
             title="Schedule Appointment"
             description="Please confirm the following details to schedule."
           />
-          <AppointmentModal
+          <RepairAppointmentModal
             patientId={appointment.patient.$id}
             userId={appointment.userId}
             appointment={appointment}
@@ -116,7 +107,7 @@ export const columns: ColumnDef<Appointment>[] = [
             title="Check Up Completed"
             description="Please confirm the following details to schedule."
           />
-          <AppointmentModal
+          <RepairAppointmentModal
             patientId={appointment.patient.$id}
             userId={appointment.userId}
             appointment={appointment}
@@ -138,9 +129,6 @@ export const columns: ColumnDef<Appointment>[] = [
             ownOrRent={appointment.patient.ownOrRent}
             patientId={appointment.patient.$id}
             userId={appointment.userId}
-            identificationDocumentUrl={
-              appointment.patient.identificationDocumentUrl
-            }
             identificationDocumentId={
               appointment.patient.identificationDocumentId
             }

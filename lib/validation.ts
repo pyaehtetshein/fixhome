@@ -85,6 +85,8 @@ export const CreateAppointmentSchema = z.object({
     .max(500, "Reason must be at most 500 characters"),
   note: z.string().optional(),
   cancellationReason: z.string().optional(),
+  boq: z.string().optional(),
+  location: z.string().min(1, "Location is required"),
 });
 
 export const ScheduleAppointmentSchema = z.object({
@@ -93,6 +95,8 @@ export const ScheduleAppointmentSchema = z.object({
   reason: z.string().optional(),
   note: z.string().optional(),
   cancellationReason: z.string().optional(),
+  boq: z.string().optional(),
+  location: z.string().min(1, "Location is required"),
 });
 
 export const CancelAppointmentSchema = z.object({
@@ -104,9 +108,60 @@ export const CancelAppointmentSchema = z.object({
     .string()
     .min(2, "Reason must be at least 2 characters")
     .max(500, "Reason must be at most 500 characters"),
+  boq: z.string().optional(),
+
+  location: z.string().min(1, "Location is required"),
 });
 
 export function getAppointmentSchema(type: string) {
+  switch (type) {
+    case "create":
+      return CreateAppointmentSchema;
+    case "cancel":
+      return CancelAppointmentSchema;
+    default:
+      return ScheduleAppointmentSchema;
+  }
+}
+
+export const CreateRepairAppointmentSchema = z.object({
+  primaryContractor: z.string().min(2, "Select at least one doctor"),
+  schedule: z.coerce.date(),
+  reason: z
+    .string()
+    .min(2, "Reason must be at least 2 characters")
+    .max(500, "Reason must be at most 500 characters"),
+  note: z.string().optional(),
+  cancellationReason: z.string().optional(),
+  boq: z.string().optional(),
+  location: z.string().min(1, "Location is required"),
+});
+
+export const ScheduleRepairAppointmentSchema = z.object({
+  primaryContractor: z.string().min(2, "Select at least one doctor"),
+  schedule: z.coerce.date(),
+  reason: z.string().optional(),
+  note: z.string().optional(),
+  cancellationReason: z.string().optional(),
+  boq: z.string().optional(),
+  location: z.string().min(1, "Location is required"),
+});
+
+export const CancelRepairAppointmentSchema = z.object({
+  primaryContractor: z.string().min(2, "Select at least one doctor"),
+  schedule: z.coerce.date(),
+  reason: z.string().optional(),
+  note: z.string().optional(),
+  cancellationReason: z
+    .string()
+    .min(2, "Reason must be at least 2 characters")
+    .max(500, "Reason must be at most 500 characters"),
+  boq: z.string().optional(),
+
+  location: z.string().min(1, "Location is required"),
+});
+
+export function getRepairAppointmentSchema(type: string) {
   switch (type) {
     case "create":
       return CreateAppointmentSchema;
